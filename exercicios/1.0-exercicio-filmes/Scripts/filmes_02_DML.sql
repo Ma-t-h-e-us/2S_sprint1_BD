@@ -1,0 +1,14 @@
+USE catalogo;
+GO
+
+INSERT INTO GENERO (nomeGenero)
+VALUES ('AÇÃO'), ('ROMANCE'), ('COMÉDIA');
+GO
+
+INSERT INTO FILME (idGenero,tituloFilme)
+VALUES (1,'RAMBO'), (2,'BARRACA DO BEIJO'), (3,'NORBIT');
+GO
+
+DELETE FROM FILME 
+WHERE idFilme IN(4,5,6);
+GO

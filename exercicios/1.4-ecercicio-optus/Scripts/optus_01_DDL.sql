@@ -1,18 +1,18 @@
-CREATE DATABASE EMPRESA_OPTUS;
-GO
+create database OPTUS
+go
 
-USE EMPRESA_OPTUS;
-GO
+use optus
+go
 
-CREATE TABLE TIPO_DE_PERMISSAO (
-idTipoDePermissao TINYINT PRIMARY KEY IDENTITY (1,1),
-nomeTipoDePermissao VARCHAR(13) NOT NULL
+create table TipoDePermissao(
+idTipoDePermissao tinyint primary key identity(1,1),
+nomeTipoDePermissao varchar(13) NOT NULL
 );
-GO
+go
 
 CREATE TABLE USUARIO (
 idUsuario SMALLINT PRIMARY KEY IDENTITY (1,1),
-idTipoDePermissao TINYINT FOREIGN KEY REFERENCES TIPO_DE_PERMISSAO(idTipoDePermissao),
+idTipoDePermissao TINYINT FOREIGN KEY REFERENCES TipoDePermissao(idTipoDePermissao),
 nomeUsuario VARCHAR(30) NOT NULL,
 emailUsuario VARCHAR(256) NOT NULL,
 senhaUsuario VARCHAR(30) NOT NULL
@@ -26,29 +26,31 @@ nomeEmpresa CHAR(5) NOT NULL
 );
 GO
 
-CREATE TABLE GERENCIAMENTO (
-idGerenciamento INT PRIMARY KEY IDENTITY (1,1),
-idOptus TINYINT FOREIGN KEY REFERENCES OPTUS(idOptus)
+create table artistas (
+idArtista int primary key identity (1,1),
+nomeArtista varchar(50) not null
 );
-GO
+go
 
-CREATE TABLE ESTILO (
+create table estilo (
 idEstilo SMALLINT PRIMARY KEY IDENTITY(1,1),
 nomeEstilo VARCHAR(30) NOT NULL
 );
 GO
 
-CREATE TABLE CDS (
-idCDs BIGINT PRIMARY KEY IDENTITY (1,1),
-idEstilo SMALLINT FOREIGN KEY REFERENCES ESTILO(idEstilo),
-nomeCD VARCHAR(30) NOT NULL
+create table AlbumEstilo (
+idAlbumEstilo int primary key identity(1,1),
+idEstilo smallint foreign key references estilo(idEstilo)
 );
-GO
+go
 
 CREATE TABLE ALBUM (
 idAlbum INT PRIMARY KEY IDENTITY (1,1),
-idGerenciamento INT FOREIGN KEY REFERENCES GERENCIAMENTO(idGerenciamento),
-idCDs BIGINT FOREIGN KEY REFERENCES CDS(idCDs),
-nomeAlbum VARCHAR(30) NOT NULL
+idOptus tinyint foreign key references optus(idOptus),
+idAlbumEstilo int foreign key references AlbumEstilo(idAlbumEstilo),
+idArtista int foreign key references artistas(idArtista),
+nomeAlbum VARCHAR(30) NOT NULL,
+dataLancamento date not null,
+minutos smallint not null
 );
 GO
